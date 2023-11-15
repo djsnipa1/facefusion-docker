@@ -96,7 +96,9 @@ COPY nginx/502.html /usr/share/nginx/html/502.html
 
 # Set up the container startup script
 WORKDIR /
-COPY --chmod=755 pre_start.sh start.sh fix_venv.sh ./
+
+# Copy the scripts
+COPY --chmod=755 scripts/* ./
 
 # Start the container
 SHELL ["/bin/bash", "--login", "-c"]
