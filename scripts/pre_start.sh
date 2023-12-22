@@ -15,6 +15,8 @@ rsync -au /facefusion/ /workspace/facefusion/
 echo "Fixing venv..."
 /fix_venv.sh /venv /workspace/venv
 
+mkdir -p /workspace/logs
+
 if [[ ${DISABLE_AUTOLAUNCH} ]]
 then
     echo "Auto launching is disabled so the application will not be started automatically"
@@ -26,7 +28,6 @@ then
     echo "   export GRADIO_SERVER_PORT=\"3001\""
     echo "   python3 run.py --execution-providers cuda"
 else
-    mkdir -p /workspace/logs
     echo "Starting FaceFusion"
     export HF_HOME="/workspace"
     source /workspace/venv/bin/activate
