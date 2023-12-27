@@ -6,7 +6,7 @@
 * CUDA 11.8
 * Python 3.10.12
 * [FaceFusion](
-  https://github.com/facefusion/facefusion) 2.1.2
+  https://github.com/facefusion/facefusion) 2.1.3
 * Torch 2.1.1
 * [runpodctl](https://github.com/runpod/runpodctl)
 * [croc](https://github.com/schollz/croc)
