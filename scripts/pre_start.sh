@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 export PYTHONUNBUFFERED=1
+export TMPDIR=/workspace/tmp
 
 echo "Container is running"
 
@@ -15,7 +16,7 @@ rsync -au /facefusion/ /workspace/facefusion/
 echo "Fixing venv..."
 /fix_venv.sh /venv /workspace/venv
 
-mkdir -p /workspace/logs
+mkdir -p /workspace/logs /workspace/tmp
 
 if [[ ${DISABLE_AUTOLAUNCH} ]]
 then
