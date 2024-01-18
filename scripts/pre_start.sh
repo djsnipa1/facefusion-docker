@@ -14,11 +14,11 @@ fi
 sync_apps() {
     # Sync venv to workspace to support Network volumes
     echo "Syncing venv to workspace, please wait..."
-    rsync -au /venv/ /workspace/venv/
+    rsync --remove-source-files -rlptDu /venv/ /workspace/venv/
 
     # Sync FaceFusion to workspace to support Network volumes
     echo "Syncing FaceFusion to workspace, please wait..."
-    rsync -au /facefusion/ /workspace/facefusion/
+    rsync --remove-source-files -rlptDu /facefusion/ /workspace/facefusion/
 
     echo "${TEMPLATE_VERSION}" > /workspace/template_version
 }
