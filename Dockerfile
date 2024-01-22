@@ -1,7 +1,7 @@
 # Stage 1: Base
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
 
-ARG FACEFUSION_VERSION=2.2.0
+ARG FACEFUSION_VERSION=2.2.1
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -111,6 +111,6 @@ WORKDIR /
 COPY --chmod=755 scripts/* ./
 
 # Start the container
-ENV TEMPLATE_VERSION=2.2.0
+ENV TEMPLATE_VERSION=2.2.1
 SHELL ["/bin/bash", "--login", "-c"]
 ENTRYPOINT [ "/start.sh" ]
