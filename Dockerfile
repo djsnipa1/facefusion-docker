@@ -75,8 +75,7 @@ RUN git clone https://github.com/facefusion/facefusion.git && \
 WORKDIR /facefusion
 RUN source /venv/bin/activate && \
     pip3 install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu118 && \
-    pip3 uninstall -y onnxruntime && \
-    pip3 install onnxruntime-gpu && \
+    python3 install.py && \
     deactivate
 
 # Install Jupyter
@@ -115,6 +114,6 @@ WORKDIR /
 COPY --chmod=755 scripts/* ./
 
 # Start the container
-ENV TEMPLATE_VERSION=2.2.2
+ENV TEMPLATE_VERSION=2.2.3
 SHELL ["/bin/bash", "--login", "-c"]
 ENTRYPOINT [ "/start.sh" ]
