@@ -74,8 +74,7 @@ RUN git clone https://github.com/facefusion/facefusion.git && \
 # Install the dependencies for FaceFusion
 WORKDIR /facefusion
 RUN source /venv/bin/activate && \
-    pip3 install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu118 && \
-    python3 install.py && \
+    python3 install.py --torch cuda --onnxruntime cuda && \
     deactivate
 
 # Install Jupyter
@@ -97,8 +96,8 @@ RUN wget https://github.com/runpod/runpodctl/releases/download/v1.10.0/runpodctl
 RUN curl https://getcroc.schollz.com | bash
 
 # Install speedtest CLI
-#RUN curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | bash && \
-#    apt install speedtest
+RUN curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | bash && \
+    apt install speedtest
 
 # Remove existing SSH host keys
 RUN rm -f /etc/ssh/ssh_host_*
