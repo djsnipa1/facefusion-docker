@@ -74,7 +74,7 @@ RUN git clone https://github.com/facefusion/facefusion.git && \
 # Install the dependencies for FaceFusion
 WORKDIR /facefusion
 RUN source /venv/bin/activate && \
-    python3 install.py --torch cuda --onnxruntime cuda && \
+    python3 install.py --torch cuda --onnxruntime cuda-11.8 && \
     deactivate
 
 # Install Jupyter
