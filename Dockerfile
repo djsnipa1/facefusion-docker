@@ -77,12 +77,18 @@ RUN source /venv/bin/activate && \
     python3 install.py --torch cuda-11.8 --onnxruntime cuda-11.8 && \
     deactivate
 
-# Install Jupyter
+# Install Jupyter, gdown and OhMyRunPod
 RUN pip3 install -U --no-cache-dir jupyterlab \
         jupyterlab_widgets \
         ipykernel \
         ipywidgets \
-        gdown
+        gdown \
+        OhMyRunPod
+
+# Install RunPod File Uploader
+RUN curl -sSL https://github.com/kodxana/RunPod-FilleUploader/raw/main/scripts/installer.sh -o installer.sh && \
+    chmod +x installer.sh && \
+    ./installer.sh
 
 # Install rclone
 RUN curl https://rclone.org/install.sh | bash
@@ -106,13 +112,13 @@ RUN rm -f /etc/ssh/ssh_host_*
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/502.html /usr/share/nginx/html/502.html
 
-# Set up the container startup script
-WORKDIR /
+# Set template version
+ENV TEMPLATE_VERSION=2.3.1
 
 # Copy the scripts
+WORKDIR /
 COPY --chmod=755 scripts/* ./
 
 # Start the container
-ENV TEMPLATE_VERSION=2.3.0
 SHELL ["/bin/bash", "--login", "-c"]
 CMD [ "/start.sh" ]
