@@ -4,9 +4,10 @@ export PYTHONUNBUFFERED=1
 export TMPDIR=/workspace/tmp
 
 echo "Template version: ${TEMPLATE_VERSION}"
+echo "venv: ${VENV_PATH}"
 
-if [[ -e "/workspace/template_version" ]]; then
-    EXISTING_VERSION=$(cat /workspace/template_version)
+if [[ -e "/workspace/facefusion/template_version" ]]; then
+    EXISTING_VERSION=$(cat /workspace/facefusion/template_version)
 else
     EXISTING_VERSION="0.0.0"
 fi
@@ -14,13 +15,14 @@ fi
 sync_apps() {
     # Sync venv to workspace to support Network volumes
     echo "Syncing venv to workspace, please wait..."
+    mkdir -p ${VENV_PATH}
     rsync --remove-source-files -rlptDu /venv/ ${VENV_PATH}/
 
     # Sync FaceFusion to workspace to support Network volumes
     echo "Syncing FaceFusion to workspace, please wait..."
     rsync --remove-source-files -rlptDu /facefusion/ /workspace/facefusion/
 
-    echo "${TEMPLATE_VERSION}" > /workspace/template_version
+    echo "${TEMPLATE_VERSION}" > /workspace/facefusion/template_version
 }
 
 fix_venvs() {
