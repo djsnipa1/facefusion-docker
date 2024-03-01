@@ -113,7 +113,10 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/502.html /usr/share/nginx/html/502.html
 
 # Set template version
-ENV TEMPLATE_VERSION=2.3.1
+ENV TEMPLATE_VERSION=2.3.2
+
+# Set the venv path
+ENV VENV_PATH="/workspace/venvs/facefusion"
 
 # Copy the scripts
 WORKDIR /

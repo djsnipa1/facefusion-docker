@@ -14,7 +14,7 @@ fi
 sync_apps() {
     # Sync venv to workspace to support Network volumes
     echo "Syncing venv to workspace, please wait..."
-    rsync --remove-source-files -rlptDu /venv/ /workspace/venv/
+    rsync --remove-source-files -rlptDu /venv/ ${VENV_PATH}/
 
     # Sync FaceFusion to workspace to support Network volumes
     echo "Syncing FaceFusion to workspace, please wait..."
@@ -24,9 +24,9 @@ sync_apps() {
 }
 
 fix_venvs() {
-    # Fix the venv to make it work from /workspace
+    # Fix the venv to make it work from VENV_PATH
     echo "Fixing venv..."
-    /fix_venv.sh /venv /workspace/venv
+    /fix_venv.sh /venv ${VENV_PATH}
 }
 
 if [ "$(printf '%s\n' "$EXISTING_VERSION" "$TEMPLATE_VERSION" | sort -V | head -n 1)" = "$EXISTING_VERSION" ]; then
@@ -39,6 +39,8 @@ if [ "$(printf '%s\n' "$EXISTING_VERSION" "$TEMPLATE_VERSION" | sort -V | head -
     else
         echo "Existing version is the same as the template version, no syncing required."
     fi
+else
+    echo "Existing version is newer than the template version, not syncing!"
 fi
 
 if [[ ${DISABLE_AUTOLAUNCH} ]]
@@ -47,14 +49,14 @@ then
     echo "You can launch it manually:"
     echo ""
     echo "   cd /workspace/facefusion"
-    echo "   deactivate && source /workspace/venv/bin/activate"
+    echo "   deactivate && source ${VENV_PATH}/bin/activate"
     echo "   export GRADIO_SERVER_NAME=\"0.0.0.0\""
     echo "   export GRADIO_SERVER_PORT=\"3001\""
     echo "   python3 run.py --execution-providers cuda"
 else
     echo "Starting FaceFusion"
     export HF_HOME="/workspace"
-    source /workspace/venv/bin/activate
+    source ${VENV_PATH}/bin/activate
     cd /workspace/facefusion
     export GRADIO_SERVER_NAME="0.0.0.0"
     export GRADIO_SERVER_PORT="3001"
