@@ -6,8 +6,10 @@ export TMPDIR=/workspace/tmp
 echo "Template version: ${TEMPLATE_VERSION}"
 echo "venv: ${VENV_PATH}"
 
-if [[ -e "/workspace/facefusion/template_version" ]]; then
-    EXISTING_VERSION=$(cat /workspace/facefusion/template_version)
+DOCKER_IMAGE_VERSION_FILE="/workspace/facefusion/docker_image_version"
+
+if [[ -e ${DOCKER_IMAGE_VERSION_FILE} ]]; then
+    EXISTING_VERSION=$(cat ${DOCKER_IMAGE_VERSION_FILE})
 else
     EXISTING_VERSION="0.0.0"
 fi
@@ -22,7 +24,7 @@ sync_apps() {
     echo "Syncing FaceFusion to workspace, please wait..."
     rsync --remove-source-files -rlptDu /facefusion/ /workspace/facefusion/
 
-    echo "${TEMPLATE_VERSION}" > /workspace/facefusion/template_version
+    echo "${TEMPLATE_VERSION}" > ${DOCKER_IMAGE_VERSION_FILE}
 }
 
 fix_venvs() {
