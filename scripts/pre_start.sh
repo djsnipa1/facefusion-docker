@@ -2,7 +2,7 @@
 
 export PYTHONUNBUFFERED=1
 export TMPDIR=/workspace/tmp
-export APP="InstantID"
+export APP="facefusion"
 DOCKER_IMAGE_VERSION_FILE="/workspace/${APP}/docker_image_version"
 
 echo "Template version: ${TEMPLATE_VERSION}"
