@@ -56,10 +56,10 @@ You can obviously substitute the image name and tag with your own.
 
 ### Environment Variables
 
-| Variable           | Description                                  | Default                          |
-|--------------------|----------------------------------------------|----------------------------------|
-| VENV_PATH          | Set the path for the Python venv for the app | /workspace/venvs/audiocraft_plus |
-| DISABLE_AUTOLAUNCH | Disable Forge from launching automatically   | (not set)                        |
+| Variable           | Description                                  | Default                     |
+|--------------------|----------------------------------------------|-----------------------------|
+| VENV_PATH          | Set the path for the Python venv for the app | /workspace/venvs/facefusion |
+| DISABLE_AUTOLAUNCH | Disable Forge from launching automatically   | (not set)                   |
 
 ## Logs
 
