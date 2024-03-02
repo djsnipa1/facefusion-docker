@@ -2,11 +2,17 @@
 
 export PYTHONUNBUFFERED=1
 export TMPDIR=/workspace/tmp
+export APP="InstantID"
+DOCKER_IMAGE_VERSION_FILE="/workspace/${APP}/docker_image_version"
 
 echo "Template version: ${TEMPLATE_VERSION}"
 echo "venv: ${VENV_PATH}"
 
-DOCKER_IMAGE_VERSION_FILE="/workspace/facefusion/docker_image_version"
+if [[ -e ${DOCKER_IMAGE_VERSION_FILE} ]]; then
+    EXISTING_VERSION=$(cat ${DOCKER_IMAGE_VERSION_FILE})
+else
+    EXISTING_VERSION="0.0.0"
+fi
 
 if [[ -e ${DOCKER_IMAGE_VERSION_FILE} ]]; then
     EXISTING_VERSION=$(cat ${DOCKER_IMAGE_VERSION_FILE})
@@ -20,11 +26,12 @@ sync_apps() {
     mkdir -p ${VENV_PATH}
     rsync --remove-source-files -rlptDu /venv/ ${VENV_PATH}/
 
-    # Sync FaceFusion to workspace to support Network volumes
-    echo "Syncing FaceFusion to workspace, please wait..."
-    rsync --remove-source-files -rlptDu /facefusion/ /workspace/facefusion/
+    # Sync application to workspace to support Network volumes
+    echo "Syncing ${APP} to workspace, please wait..."
+    rsync --remove-source-files -rlptDu /${APP}/ /workspace/${APP}/
 
     echo "${TEMPLATE_VERSION}" > ${DOCKER_IMAGE_VERSION_FILE}
+    echo "${VENV_PATH}" > "/workspace/${APP}/venv_path"
 }
 
 fix_venvs() {
@@ -52,22 +59,11 @@ then
     echo "Auto launching is disabled so the application will not be started automatically"
     echo "You can launch it manually:"
     echo ""
-    echo "   cd /workspace/facefusion"
-    echo "   deactivate && source ${VENV_PATH}/bin/activate"
-    echo "   export GRADIO_SERVER_NAME=\"0.0.0.0\""
-    echo "   export GRADIO_SERVER_PORT=\"3001\""
-    echo "   python3 run.py --execution-providers cuda"
+    echo "   /start_facefusion.sh"
 else
-    echo "Starting FaceFusion"
-    export HF_HOME="/workspace"
-    source ${VENV_PATH}/bin/activate
-    cd /workspace/facefusion
-    export GRADIO_SERVER_NAME="0.0.0.0"
-    export GRADIO_SERVER_PORT="3001"
-    nohup python3 run.py --execution-thread-count 8 --execution-providers cuda > /workspace/logs/facefusion.log 2>&1 &
-    echo "FaceFusion started"
-    echo "Log file: /workspace/logs/facefusion.log"
-    deactivate
+
+    /start_facefusion.sh
+
 fi
 
 echo "All services have been started"

@@ -2,15 +2,13 @@
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
 
 ARG FACEFUSION_VERSION=2.3.0
+ARG TORCH_VERSION=2.1.2
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=on \
     SHELL=/bin/bash
-
-# Create workspace working directory
-WORKDIR /
 
 # Install Ubuntu packages
 RUN apt update && \
@@ -70,6 +68,12 @@ WORKDIR /
 RUN git clone https://github.com/facefusion/facefusion.git && \
     cd /facefusion && \
     git checkout ${FACEFUSION_VERSION}
+
+# Install torch
+ENV TORCH_INDEX_URL="https://download.pytorch.org/whl/cu118"
+ENV TORCH_COMMAND="pip install torch==${TORCH_VERSION} torchvision --index-url ${TORCH_INDEX_URL}"
+RUN source /venv/bin/activate && \
+    ${TORCH_COMMAND}
 
 # Install the dependencies for FaceFusion
 WORKDIR /facefusion
