@@ -1,9 +1,6 @@
 # Stage 1: Base
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
 
-ARG FACEFUSION_VERSION=2.3.0
-ARG TORCH_VERSION=2.1.2
-
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
@@ -65,20 +62,24 @@ RUN python3 -m venv /venv
 
 # Clone the git repo of FaceFusion and set version
 WORKDIR /
+ARG FACEFUSION_VERSION
 RUN git clone https://github.com/facefusion/facefusion.git && \
     cd /facefusion && \
     git checkout ${FACEFUSION_VERSION}
 
 # Install torch
-ENV TORCH_INDEX_URL="https://download.pytorch.org/whl/cu118"
+ARG INDEX_URL
+ARG TORCH_VERSION
+ENV TORCH_INDEX_URL=${INDEX_URL}
 ENV TORCH_COMMAND="pip install torch==${TORCH_VERSION} torchvision --index-url ${TORCH_INDEX_URL}"
 RUN source /venv/bin/activate && \
     ${TORCH_COMMAND}
 
 # Install the dependencies for FaceFusion
+ARG FACEFUSION_CUDA_VERSION
 WORKDIR /facefusion
 RUN source /venv/bin/activate && \
-    python3 install.py --torch cuda-11.8 --onnxruntime cuda-11.8 && \
+    python3 install.py --torch cuda-${FACEFUSION_CUDA_VERSION} --onnxruntime cuda-${FACEFUSION_CUDA_VERSION} && \
     deactivate
 
 # Install Jupyter, gdown and OhMyRunPod
@@ -98,7 +99,8 @@ RUN curl -sSL https://github.com/kodxana/RunPod-FilleUploader/raw/main/scripts/i
 RUN curl https://rclone.org/install.sh | bash
 
 # Install runpodctl
-RUN wget https://github.com/runpod/runpodctl/releases/download/v1.13.0/runpodctl-linux-amd64 -O runpodctl && \
+ARG RUNPODCTL_VERSION
+RUN wget "https://github.com/runpod/runpodctl/releases/download/${RUNPODCTL_VERSION}/runpodctl-linux-amd64" -O runpodctl && \
     chmod a+x runpodctl && \
     mv runpodctl /usr/local/bin
 
@@ -117,10 +119,12 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/502.html /usr/share/nginx/html/502.html
 
 # Set template version
-ENV TEMPLATE_VERSION=2.3.4
+ARG RELEASE
+ENV TEMPLATE_VERSION=${RELEASE}
 
 # Set the venv path
-ENV VENV_PATH="/workspace/venvs/facefusion"
+ARG VENV_PATH
+ENV VENV_PATH=${VENV_PATH}
 
 # Copy the scripts
 WORKDIR /
