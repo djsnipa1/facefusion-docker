@@ -79,7 +79,7 @@ RUN source /venv/bin/activate && \
 ARG FACEFUSION_CUDA_VERSION
 WORKDIR /facefusion
 RUN source /venv/bin/activate && \
-    python3 install.py --torch cuda-${FACEFUSION_CUDA_VERSION} --onnxruntime cuda-${FACEFUSION_CUDA_VERSION} && \
+    python3 install.py --onnxruntime cuda-${FACEFUSION_CUDA_VERSION} && \
     deactivate
 
 # Install Jupyter, gdown and OhMyRunPod
