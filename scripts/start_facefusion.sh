@@ -9,9 +9,9 @@ fi
 
 echo "Starting FaceFusion"
 export HF_HOME="/workspace"
-VENV_PATH=$(cat /workspace/facefusion/venv_path)
-source ${VENV_PATH}/bin/activate
 cd /workspace/facefusion
+eval "$(micromamba shell hook --shell bash)"
+micromamba activate facefusion
 export GRADIO_SERVER_NAME="0.0.0.0"
 export GRADIO_SERVER_PORT="3001"
 nohup python3 run.py \
