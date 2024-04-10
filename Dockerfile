@@ -66,7 +66,7 @@ RUN mkdir -p /opt/micromamba && \
     /opt/micromamba/bin/micromamba config append channels conda-forge && \
     eval "$(micromamba shell hook --shell bash)" && \
     micromamba activate && \
-    conda create --name facefusion python=3.10
+    micromamba create --name facefusion python=3.10
 
 # Clone the git repo of FaceFusion and set version
 WORKDIR /
