@@ -80,13 +80,15 @@ ARG INDEX_URL
 ARG TORCH_VERSION
 ENV TORCH_INDEX_URL=${INDEX_URL}
 ENV TORCH_COMMAND="pip3 install torch==${TORCH_VERSION} torchvision --index-url ${TORCH_INDEX_URL}"
-RUN micromamba activate facefusion && \
+RUN eval "$(micromamba shell hook --shell bash)" && \
+    micromamba activate facefusion && \
     ${TORCH_COMMAND}
 
 # Install the dependencies for FaceFusion
 ARG FACEFUSION_CUDA_VERSION
 WORKDIR /facefusion
-RUN micromamba activate facefusion && \
+RUN eval "$(micromamba shell hook --shell bash)" && \
+    micromamba activate facefusion && \
     python3 install.py --onnxruntime cuda-${FACEFUSION_CUDA_VERSION} && \
     micromamba deactivate
 
