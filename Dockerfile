@@ -57,8 +57,16 @@ RUN ln -s /usr/bin/python3.10 /usr/bin/python
 # Stage 2: Install FaceFusion and python modules
 FROM base as setup
 
-# Create and use the Python venv
-RUN python3 -m venv /venv
+# Install micromamba (conda replacement)
+RUN mkdir -p /opt/micromamba && \
+    cd /opt/micromamba && \
+    curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba && \
+    ln -s /opt/micromamba/bin/micromamba /usr/local/bin/micromamba && \
+    /opt/micromamba/bin/micromamba shell init -s bash -p ~/micromamba && \
+    /opt/micromamba/bin/micromamba config append channels conda-forge && \
+    eval "$(micromamba shell hook --shell bash)" && \
+    micromamba activate && \
+    conda create --name facefusion python=3.10
 
 # Clone the git repo of FaceFusion and set version
 WORKDIR /
@@ -71,16 +79,16 @@ RUN git clone https://github.com/facefusion/facefusion.git && \
 ARG INDEX_URL
 ARG TORCH_VERSION
 ENV TORCH_INDEX_URL=${INDEX_URL}
-ENV TORCH_COMMAND="pip install torch==${TORCH_VERSION} torchvision --index-url ${TORCH_INDEX_URL}"
-RUN source /venv/bin/activate && \
+ENV TORCH_COMMAND="pip3 install torch==${TORCH_VERSION} torchvision --index-url ${TORCH_INDEX_URL}"
+RUN micromamba activate facefusion && \
     ${TORCH_COMMAND}
 
 # Install the dependencies for FaceFusion
 ARG FACEFUSION_CUDA_VERSION
 WORKDIR /facefusion
-RUN source /venv/bin/activate && \
+RUN micromamba activate facefusion && \
     python3 install.py --onnxruntime cuda-${FACEFUSION_CUDA_VERSION} && \
-    deactivate
+    micromamba deactivate
 
 # Install Jupyter, gdown and OhMyRunPod
 RUN pip3 install -U --no-cache-dir jupyterlab \
@@ -121,10 +129,6 @@ COPY nginx/502.html /usr/share/nginx/html/502.html
 # Set template version
 ARG RELEASE
 ENV TEMPLATE_VERSION=${RELEASE}
-
-# Set the venv path
-ARG VENV_PATH
-ENV VENV_PATH=${VENV_PATH}
 
 # Copy the scripts
 WORKDIR /

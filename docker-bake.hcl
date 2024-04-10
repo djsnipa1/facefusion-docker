@@ -25,6 +25,5 @@ target "default" {
         FACEFUSION_VERSION = "2.5.0"
         FACEFUSION_CUDA_VERSION = "11.8"
         RUNPODCTL_VERSION = "v1.14.2"
-        VENV_PATH = "/workspace/venvs/${APP}"
     }
 }
