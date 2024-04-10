@@ -66,7 +66,7 @@ docker run -d \
   -p 3000:3001 \
   -p 8888:8888 \
   -p 2999:2999 \
-  -e VENV_PATH="/workspace/venvs/facefusion" \
+  -e JUPYTER_LAB_PASSWORD="password" \
   ashleykza/facefusion:latest
 ```
 
@@ -84,7 +84,6 @@ You can obviously substitute the image name and tag with your own.
 
 | Variable             | Description                                  | Default                     |
 |----------------------|----------------------------------------------|-----------------------------|
-| VENV_PATH            | Set the path for the Python venv for the app | /workspace/venvs/facefusion |
 | JUPYTER_LAB_PASSWORD | Set a password for Jupyter lab               | not set - no password       |
 | DISABLE_AUTOLAUNCH   | Disable Forge from launching automatically   | (not set)                   |
 
