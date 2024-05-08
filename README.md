@@ -13,7 +13,7 @@
 * CUDA 11.8
 * Python 3.10.12
 * [FaceFusion](
-  https://github.com/facefusion/facefusion) 2.5.2
+  https://github.com/facefusion/facefusion) 2.5.3
 * Torch 2.1.2
 * Jupyter Lab
 * [runpodctl](https://github.com/runpod/runpodctl)
@@ -34,7 +34,7 @@ to launch it on RunPod.
 ## Building the Docker image
 
 > [!NOTE]
-> You will need to edit the `docker-bake.hcl` file and update `USERNAME`,
+> You will need to edit the `docker-bake.hcl` file and update `REGISTRY_USER`,
 > and `RELEASE`.  You can obviously edit the other values too, but these
 > are the most important ones.
 
@@ -46,8 +46,11 @@ git clone https://github.com/ashleykleynhans/facefusion-docker.git
 docker login
 
 # Build the image, tag the image, and push the image to Docker Hub
-cd facefusion-docker
 docker buildx bake -f docker-bake.hcl --push
+
+# Same as above but customize registry/user/release:
+REGISTRY=ghcr.io REGISTRY_USER=myuser RELEASE=my-release docker buildx \
+    bake -f docker-bake.hcl --push
 ```
 
 ## Running Locally

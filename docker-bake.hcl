@@ -1,4 +1,8 @@
-variable "USERNAME" {
+variable "REGISTRY" {
+    default = "docker.io"
+}
+
+variable "REGISTRY_USER" {
     default = "ashleykza"
 }
 
@@ -7,7 +11,7 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "2.5.2"
+    default = "2.5.3"
 }
 
 variable "CU_VERSION" {
@@ -16,13 +20,13 @@ variable "CU_VERSION" {
 
 target "default" {
     dockerfile = "Dockerfile"
-    tags = ["${USERNAME}/${APP}:${RELEASE}"]
+    tags = ["${REGISTRY}/${REGISTRY_USER}/${APP}:${RELEASE}"]
     args = {
         RELEASE = "${RELEASE}"
         INDEX_URL = "https://download.pytorch.org/whl/cu${CU_VERSION}"
         TORCH_VERSION = "2.1.2+cu${CU_VERSION}"
         XFORMERS_VERSION = "0.0.23.post1+cu${CU_VERSION}"
-        FACEFUSION_VERSION = "2.5.2"
+        FACEFUSION_VERSION = "2.5.3"
         FACEFUSION_CUDA_VERSION = "11.8"
         RUNPODCTL_VERSION = "v1.14.2"
     }
