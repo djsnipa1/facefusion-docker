@@ -19,4 +19,4 @@ nohup python3 run.py \
     --execution-providers cuda > /workspace/logs/facefusion.log 2>&1 &
 echo "FaceFusion started"
 echo "Log file: /workspace/logs/facefusion.log"
-deactivate
+micromamba deactivate
