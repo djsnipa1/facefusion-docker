@@ -13,7 +13,7 @@
 * CUDA 11.8
 * Python 3.10.12
 * [FaceFusion](
-  https://github.com/facefusion/facefusion) 2.5.3
+  https://github.com/facefusion/facefusion) 2.6.0
 * Torch 2.1.2
 * Jupyter Lab
 * [runpodctl](https://github.com/runpod/runpodctl)
