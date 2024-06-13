@@ -28,6 +28,6 @@ target "default" {
         XFORMERS_VERSION = "0.0.23.post1+cu${CU_VERSION}"
         FACEFUSION_VERSION = "${RELEASE}"
         FACEFUSION_CUDA_VERSION = "11.8"
-        RUNPODCTL_VERSION = "v1.14.2"
+        RUNPODCTL_VERSION = "v1.14.3"
     }
 }

@@ -20,11 +20,14 @@ else
 fi
 
 sync_apps() {
-    # Sync application to workspace to support Network volumes
-    echo "Syncing ${APP} to workspace, please wait..."
-    rsync --remove-source-files -rlptDu /${APP}/ /workspace/${APP}/
+    # Only sync if the DISABLE_SYNC environment variable is not set
+    if [ -z "${DISABLE_SYNC}" ]; then
+        # Sync application to workspace to support Network volumes
+        echo "Syncing ${APP} to workspace, please wait..."
+        mv /${APP} /workspace/${APP}
 
-    echo "${TEMPLATE_VERSION}" > ${DOCKER_IMAGE_VERSION_FILE}
+        echo "${TEMPLATE_VERSION}" > ${DOCKER_IMAGE_VERSION_FILE}
+    fi
 }
 
 if [ "$(printf '%s\n' "$EXISTING_VERSION" "$TEMPLATE_VERSION" | sort -V | head -n 1)" = "$EXISTING_VERSION" ]; then
