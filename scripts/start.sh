@@ -42,6 +42,8 @@ check_cuda_version() {
 # Simple CUDA functionality test using PyTorch
 test_pytorch_cuda() {
     echo "Performing a simple CUDA functionality test using PyTorch..."
+    eval "$(micromamba shell hook --shell bash)"
+    micromamba activate facefusion
 
     python3 - <<END
 import sys
@@ -83,6 +85,8 @@ END
     else
         echo "CUDA version is sufficient and functional."
     fi
+
+    micromamba deactivate
 }
 
 start_nginx() {
