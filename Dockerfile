@@ -23,6 +23,8 @@ RUN apt update && \
         git \
         ncdu \
         net-tools \
+        dnsutils \
+        inetutils-ping \
         openssh-server \
         libglib2.0-0 \
         libsm6 \
@@ -40,6 +42,8 @@ RUN apt update && \
         htop \
         screen \
         tmux \
+        aria2 \
+        cron \
         pkg-config \
         libcairo2-dev \
         libgoogle-perftools4 \
