@@ -1,5 +1,5 @@
 # Stage 1: Base
-FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04 as base
+FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive \

@@ -15,7 +15,7 @@ variable "RELEASE" {
 }
 
 variable "CU_VERSION" {
-    default = "121"
+    default = "118"
 }
 
 target "default" {
@@ -27,7 +27,7 @@ target "default" {
         TORCH_VERSION = "2.1.2+cu${CU_VERSION}"
         XFORMERS_VERSION = "0.0.23.post1+cu${CU_VERSION}"
         FACEFUSION_VERSION = "${RELEASE}"
-        FACEFUSION_CUDA_VERSION = "12.1"
+        FACEFUSION_CUDA_VERSION = "11.8"
         RUNPODCTL_VERSION = "v1.14.3"
     }
 }
