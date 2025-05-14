@@ -14,7 +14,7 @@ eval "$(micromamba shell hook --shell bash)"
 micromamba activate facefusion
 export GRADIO_SERVER_NAME="0.0.0.0"
 export GRADIO_SERVER_PORT="3001"
-nohup python3 run.py \
+nohup python3 facefusion.py run \
     --execution-thread-count ${THREAD_COUNT} \
     --execution-providers cuda > /workspace/logs/facefusion.log 2>&1 &
 echo "FaceFusion started"
