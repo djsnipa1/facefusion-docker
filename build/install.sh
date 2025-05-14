@@ -32,10 +32,21 @@ mkdir -p /opt/micromamba
 cd /opt/micromamba
 curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 ln -s /opt/micromamba/bin/micromamba /usr/local/bin/micromamba
-/opt/micromamba/bin/micromamba shell init -s bash -p ~/micromamba
+
+# Initialize the shell - fixing the issue with the -p flag
+/opt/micromamba/bin/micromamba shell init -s bash
+
+# Set the path for your environments
+micromamba config set root_prefix ~/micromamba
+
+# Add conda-forge channel
 /opt/micromamba/bin/micromamba config append channels conda-forge
+
+# Activate micromamba in the current shell
 eval "$(micromamba shell hook --shell bash)"
 micromamba activate
+
+# Create your environment
 micromamba create --name facefusion python=3.12
 
 # Clone the git repo of FaceFusion and set version
