@@ -2,7 +2,16 @@
 
 if [[ ${RUNPOD_CPU_COUNT} ]]
 then
-    export THREAD_COUNT=${RUNPOD_CPU_COUNT}
+    # Temporarily store the value
+    THREAD_COUNT=${RUNPOD_CPU_COUNT}
+
+    # Check if it's greater than 32
+    if [[ ${THREAD_COUNT} -gt 32 ]]
+    then
+        export THREAD_COUNT=32
+    else
+        export THREAD_COUNT=${THREAD_COUNT}
+    fi
 else
     export THREAD_COUNT=8
 fi
