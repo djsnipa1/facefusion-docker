@@ -11,23 +11,24 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "2.6.1"
+    default = "3.2.0"
 }
 
 variable "CU_VERSION" {
-    default = "118"
+    default = "124"
 }
 
 target "default" {
     dockerfile = "Dockerfile"
-    tags = ["${REGISTRY}/${REGISTRY_USER}/${APP}:${RELEASE}.post1"]
+    tags = ["${REGISTRY}/${REGISTRY_USER}/${APP}:${RELEASE}"]
     args = {
         RELEASE = "${RELEASE}"
+        PYTHON_VERSION = "3.12"
         INDEX_URL = "https://download.pytorch.org/whl/cu${CU_VERSION}"
-        TORCH_VERSION = "2.1.2+cu${CU_VERSION}"
-        XFORMERS_VERSION = "0.0.23.post1+cu${CU_VERSION}"
+        TORCH_VERSION = "2.6.0+cu${CU_VERSION}"
+        XFORMERS_VERSION = "0.0.29.post3+cu${CU_VERSION}"
         FACEFUSION_VERSION = "${RELEASE}"
-        FACEFUSION_CUDA_VERSION = "11.8"
-        RUNPODCTL_VERSION = "v1.14.3"
+        FACEFUSION_CUDA_VERSION = "12.4"
+        RUNPODCTL_VERSION = "v1.14.4"
     }
 }

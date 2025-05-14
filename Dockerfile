@@ -1,5 +1,5 @@
 # Stage 1: Base
-FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
+FROM nvidia/cuda:12.4.1-cudnn-devel-ubuntu22.04 as base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -65,6 +65,7 @@ FROM base as setup
 WORKDIR /
 ARG FACEFUSION_VERSION
 ARG FACEFUSION_CUDA_VERSION
+ARG PYTHON_VERSION
 ARG INDEX_URL
 ARG TORCH_VERSION
 ENV TORCH_INDEX_URL=${INDEX_URL}
