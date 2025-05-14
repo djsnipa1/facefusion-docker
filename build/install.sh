@@ -60,5 +60,5 @@ micromamba activate facefusion
 ${TORCH_COMMAND}
 
 # Install the dependencies for FaceFusion
-python3 install.py --onnxruntime cuda-${FACEFUSION_CUDA_VERSION}
+python3 install.py --onnxruntime cuda
 micromamba deactivate
