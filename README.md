@@ -13,7 +13,7 @@
 * CUDA 12.4
 * Python 3.12.9
 * [FaceFusion](
-  https://github.com/facefusion/facefusion) 3.4.1
+  https://github.com/facefusion/facefusion) 3.4.2
 * Torch 2.6.0
 * [Jupyter Lab](https://github.com/jupyterlab/jupyterlab)
 * [code-server](https://github.com/coder/code-server)
@@ -84,7 +84,7 @@ You can obviously substitute the image name and tag with your own.
 | 3000         | 3001          | FaceFusion           |
 | 7777         | 7777          | Code Server          |
 | 8888         | 8888          | Jupyter Lab          |
-| 2999         | 2999          | RunPod File Uploader |
+| 2999         | 2999          | Runpod File Uploader |
 
 ### Environment Variables
 
