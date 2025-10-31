@@ -41,7 +41,7 @@ micromamba activate
 micromamba create --name facefusion python=3.12
 
 # Clone the git repo of FaceFusion and set version
-git clone https://github.com/djsnipa1/facefusion.git /facefusion
+git clone https://github.com/djsnipa1/facefusion /facefusion
 cd /facefusion
 git checkout ${FACEFUSION_VERSION}
 
